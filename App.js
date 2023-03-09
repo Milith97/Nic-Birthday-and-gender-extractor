@@ -1,4 +1,4 @@
-import { View, Text, Image, ScrollView, StyleSheet, TextInput, SafeAreaView } from 'react-native'
+import { View, Text, ScrollView, StyleSheet, TextInput, SafeAreaView, Image, ImageBackground } from 'react-native'
 import React, { useState } from 'react';
 import { Button } from 'react-native-paper';
 
@@ -9,19 +9,40 @@ export default function App() {
   const [idNumber, setIdNumber] = React.useState("");
   const [getDob, setGetDob] = React.useState("");
   const [getGender, setGetGender] = React.useState("")
+  const lankaNIC = require("lanka-nic");
+
+  const renderItem = () => {
+    let { dateOfBirth, gender } = lankaNIC.getInfoFromNIC(idNumber);
+    setGetDob(dateOfBirth);
+    setGetGender(gender);
+  };
+
+  const clearItems = () => {
+    setGetDob("");
+    setGetGender("");
+    setIdNumber("");
+  };
+
+
 
   return (
-    <ScrollView>
-      <SafeAreaView>
 
-        <Text style={{
-          textAlign: 'center',
-          fontSize: 50,
-          marginTop: '20%',
-          marginBottom: '1%'
-        }} >
+    <ScrollView >
+      <SafeAreaView style={{flex:1, backgroundColor:'#22A39F'}}>
+      
+        
+
+
+        <Text style={styles.baseText} >
           Sri Lanka NIC Details
         </Text>
+
+        <View style={styles.container5}>
+          <Image
+            style={styles.tinyLogo}
+            source={require('./Img/lanka.png')} />
+        </View>
+
 
         <View style={styles.container}>
           <View style={styles.SectionStyle}>
@@ -64,19 +85,34 @@ export default function App() {
           </View>
         </View>
 
-
-
-
-
-
-
+        <View style={styles.container4}>
+          <Button style={styles.btn2} mode="contained" onPress={() => clearItems()}>
+            CLEAR  DETAILS
+          </Button>
+        </View>
+       
       </SafeAreaView>
     </ScrollView>
 
   )
 }
 
+
 const styles = StyleSheet.create({
+
+  FullScreen:{
+    
+    
+  },
+
+  baseText: {
+    textAlign: 'center',
+    fontSize: 30,
+    color: '#00337C',
+    fontWeight: 'bold',
+    marginTop: '10%',
+    marginBottom: '1%'
+  },
 
   SectionStyle: {
     flexDirection: 'row',
@@ -117,24 +153,40 @@ const styles = StyleSheet.create({
 
   },
 
+  container4: {
+    marginBottom: '15%',
+  },
+
+  container5: {
+    marginLeft: '25%',
+
+    height: 100,
+    resizeMode: 'contain'
+
+
+  },
+
   btn: {
     marginTop: '1%',
     marginBottom: '1%',
-    width: '40%',
+    width: '50%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: '30%',
-    backgroundColor: `#1C82AD`,
-    fontSize: '10'
+    marginLeft: '25%',
+    backgroundColor: `#5D3891`,
+    fontSize: '20',
+    borderRadius: 4
 
   },
   btn2: {
     marginTop: '1%',
-    width: '40%',
+    width: '50%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: '30%',
-    backgroundColor: `#FFB100`
+    marginLeft: '25%',
+    backgroundColor: `#F99417`,
+    borderRadius: 4
+
 
   }
 
